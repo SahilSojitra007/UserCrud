@@ -1,0 +1,199 @@
+﻿@model IEnumerable<UserCrud.Models.UserModel>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="~/scripts/main.js"></script>
+
+<style>
+    .error-message {
+        color: red !important;
+    }
+</style>
+
+<h2 style="text-align: -webkit-center;">User Data Table</h2>
+
+<p>
+    <input type="button" value="Add" class="btn btn-primary" data-toggle="modal" href="#AddUserModal" />
+</p>
+
+<table class="table table-bordered">
+    <tr>
+        <th>
+            Name
+        </th>
+        <th>
+            Email
+        </th>
+        <th>
+            Phone Number
+        </th>
+        <th>Action</th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Email)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PhoneNo)
+            </td>
+            <td>
+                <input type="button" value="Edit" class="btn btn-info edit-btn" data-toggle="modal" data-id="@item.Id" data-target="#EditUserModal" /> |
+                <input type="button" value="Delete" class="btn btn-danger dlt-btn" data-id="@item.Id" />
+            </td>
+        </tr>
+    }
+</table>
+
+<div class="modal fade" id="AddUserModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog" style="width:322px">
+        <form id="userForm">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="myModalLabel">Add User</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true" style="margin-top: -22px;">×</button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-sm-12" style="margin-top:5px">
+                            <label for="name">Name</label>
+                            <input type="text" class="form-control" id="name" name="name" autocomplete="off">  
+                            <div class="error-message text-danger" id="name-error"></div>
+                        </div>
+
+                        <div class="col-sm-12" style="margin-top:5px">
+                            <label for="email">Email</label>
+                            <input type="email" class="form-control" id="email" name="email" autocomplete="off">
+                            <div class="error-message text-danger" id="email-error"></div>
+                        </div>
+
+                        <div class="col-sm-12" style="margin-top:5px">
+                            <label for="phone">Phone Number</label>
+                            <input type="tel" class="form-control" id="phoneno" name="phoneno" autocomplete="off">
+                            <div class="error-message text-danger" id="phone-error"></div>
+                        </div>
+
+                        <div class="col-sm-12" style="margin-top:5px">
+                            <label for="address">Address</label>
+                            <input type="text" class="form-control" id="address" name="address" autocomplete="off">
+                        </div>
+
+                        <div class="col-sm-12" style="margin-top:5px">
+                            <label for="state">State</label>
+                            <select class="form-control" id="state" name="state">
+                                <option></option>
+                                @foreach (var state in ViewBag.State)
+                                {
+                                    <option value="@state.Value">@state.Text</option>
+                                }
+                            </select>
+                            <div class="error-message text-danger" id="state-error"></div>
+                        </div>
+
+                        <div class="col-sm-12" style="margin-top:5px">
+                            <label for="city">City</label>
+                            <select class="form-control" id="city" name="city">
+                                <option></option>
+                            </select>
+                            <div class="error-message text-danger" id="city-error"></div>
+                        </div>
+
+                        <div class="col-sm-12" style="margin-top:10px">
+                            <label>
+                                <input type="checkbox" id="Agree" name="Agree"> Agree?
+                            </label>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-success" id="submitBtn">Submit</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div class="modal fade" id="EditUserModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog" style="width:322px">
+        <form id="userForm">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="myModalLabel">Edit User</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true" style="margin-top: -22px;">×</button>
+                </div>
+                <div class="modal-body">
+
+                    <div class="row">
+                        <input type="hidden" id="editid" name="id">
+
+                        <div class="col-sm-12" style="margin-top:5px">
+                            <label for="name">Name</label>
+                            <input type="text" class="form-control" id="editname" name="editname" autocomplete="off">
+                            <div class="error-message text-danger" id="name-error"></div>
+                        </div>
+
+                        <div class="col-sm-12" style="margin-top:5px">
+                            <label for="email">Email</label>
+                            <input type="email" class="form-control" id="editemail" name="editemail" autocomplete="off">
+                            <div class="error-message text-danger" id="email-error"></div>
+                        </div>
+
+                        <div class="col-sm-12" style="margin-top:5px">
+                            <label for="phone">Phone Number</label>
+                            <input type="tel" class="form-control" id="editphoneno" name="editphoneno" autocomplete="off">
+                            <div class="error-message text-danger" id="phone-error"></div>
+                        </div>
+
+                        <div class="col-sm-12" style="margin-top:5px">
+                            <label for="address">Address</label>
+                            <input type="text" class="form-control" id="editaddress" name="editaddress" autocomplete="off">
+                        </div>
+
+                        <div class="col-sm-12" style="margin-top:5px">
+                            <label for="state">State</label>
+                            <select class="form-control" id="editstate" name="editstate">
+                                <option></option>
+                                @foreach (var state in ViewBag.State)
+                                {
+                                    <option value="@state.Value">@state.Text</option>
+                                }
+                            </select>
+                            <div class="error-message text-danger" id="state-error"></div>
+                        </div>
+
+                        <div class="col-sm-12" style="margin-top:5px">
+                            <label for="city">City</label>
+                            <select class="form-control" id="editcity" name="editcity">
+                                <option></option>
+                            </select>
+                            <div class="error-message text-danger" id="city-error"></div>
+                        </div>
+
+                        <div class="col-sm-12" style="margin-top:10px">
+                            <label>
+                                <input type="checkbox" id="editAgree" name="editAgree"> Agree?
+                            </label>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-success" id="UpdateBtn">Update</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+

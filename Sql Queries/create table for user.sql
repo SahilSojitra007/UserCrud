@@ -1,0 +1,10 @@
+CREATE TABLE UserForm (
+    Id INT PRIMARY KEY IDENTITY(1,1),
+    Name VARCHAR(100) NOT NULL,
+    Email VARCHAR(100) NOT NULL,
+    PhoneNo VARCHAR(20) NOT NULL,
+    Address VARCHAR(255),
+    State VARCHAR(50) NOT NULL,
+    City VARCHAR(50) NOT NULL,
+    Agree BIT
+);
